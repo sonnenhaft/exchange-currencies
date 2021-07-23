@@ -1,5 +1,5 @@
 {
-  "name": "revolut",
+  "name": "currency-exchange",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:gh-pages": "react-scripts build && mv build/* ./",
     "lint:fix": "prettier --write . && ./node_modules/.bin/eslint src --fix",
     "test": "react-scripts test",
     "lint": "./node_modules/.bin/eslint src"
@@ -60,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2"

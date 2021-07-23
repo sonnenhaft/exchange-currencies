@@ -1,0 +1,1 @@
+export { CurrencyBlockWithDropdown } from './CurrencyBlockWithDropdown';

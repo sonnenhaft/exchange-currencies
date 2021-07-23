@@ -12,5 +12,5 @@ test('renders learn react link', () => {
         console.log(prettyDOM(dom.container.firstChild));
     }
 
-    expect(screen.getByText(/Counter: /i)).toBeInTheDocument();
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
 });

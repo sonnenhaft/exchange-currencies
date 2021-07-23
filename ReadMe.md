@@ -1,7 +1,7 @@
 Based on [react-cra](https://github.com/facebook/create-react-app). Was generated using next script:
 
 ```sh
-npx create-react-app revolut --template typescript
+npx create-react-app exchange-currencies --template typescript
 ```
 
 | npm script      | description                                                                          |

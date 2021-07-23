@@ -12,13 +12,14 @@ const readHash = (url: string = window.location.href) => {
  * It works like `React.useState`, just browsers url - its hash part (query in the hash) as storage
  * quite handy to share the state of the app, and quite lightweight, hope u will like it
  */
-export function useHash(hashKey: string): [string, (t: string) => void] {
-    const initialState = () => readHash()[hashKey];
+export function useHash(hashKey: string, defaultVal = ''): [string, (t: string) => void] {
+    const initialState = () => readHash()[hashKey] || defaultVal;
     const [currentValue, setCurrentValue] = useState<string>(initialState);
 
     useEffect(() => {
         const setFromHashIfChanged = e => {
             const newHashValue = readHash(e.newURL)[hashKey];
+
             if (newHashValue !== currentValue) {
                 setCurrentValue(newHashValue);
             }
@@ -44,7 +45,12 @@ export function useHash(hashKey: string): [string, (t: string) => void] {
 /** Same as `useHash` but for numbers */
 export function useNumberHash(hashKey: string, defaultVal: number): [number, (t: number) => void] {
     const [strVal, setStrVal] = useHash(hashKey);
-    const num = Number.parseInt(strVal, 10);
+    const num = Number.parseFloat(strVal);
 
     return [strVal && !isNaN(num) ? num : defaultVal, (n: number) => setStrVal(n + '')];
+}
+
+export function useBoolHash(key: string): [boolean, (val: boolean) => void] {
+    const [withMocksStr, setWithMocksStr] = useHash(key, '');
+    return [withMocksStr === 'true', (bool: boolean) => setWithMocksStr(bool ? 'true' : '')];
 }
