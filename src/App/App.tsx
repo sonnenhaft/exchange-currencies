@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNumberHash } from './useHash';
 import { Logo } from './Logo';
 import { Button } from './Button';
+import { test } from './freeCurrconvApi';
 
 const AppStyles = styled.div`
     text-align: center;
@@ -18,16 +19,18 @@ const AppStyles = styled.div`
     justify-content: center;
 `;
 
+test();
+
 export const App = () => {
     const [count, setCount] = useNumberHash('counter', 1);
 
     return (
         <AppStyles>
             <Button onClick={ () => setCount(count + 1) } as="a">
-                Counter: { count }
+                Counter: {count}
             </Button>
 
-            <Logo/>
+            <Logo />
         </AppStyles>
     );
 };
