@@ -47,7 +47,7 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
         // of course ideally on mobile here to have 'number' so proper keyboard selected
         // but to add "plus" in front, in browser, without playing with content editable
         // I chosen text input with custom validations
-        <CustomTextInputStyles tabIndex={ -1 } className={ focused ? 'focused' : '' }>
+        <CustomTextInputStyles className={ focused ? 'focused' : '' }>
             <div className="currency-near-input">{symbol}</div>
 
             <input

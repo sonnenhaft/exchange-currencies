@@ -1,14 +1,23 @@
 import styled from 'styled-components';
 import { themes } from './utils';
 
-// Material "ripple" button - https://codepen.io/finnhvman/pen/jLXKJw
 export const RippleButton = styled.button`
     background-position: center;
+    background-color: ${ ({ theme }) => theme.background };
+    border: 1px solid ${ ({ theme }) => theme.text };
+    border-radius: 4px;
+    color: ${ ({ theme }) => theme.text };
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 40px;
+    outline: none;
+    padding: 7px 12px 10px 12px;
     transition: background 0.8s;
 
     &:hover {
         background: ${ ({ theme }) => theme.active }
-            radial-gradient(circle, transparent 1%, ${ ({ theme }) => theme.background } 1%) center/70000%;
+            radial-gradient(circle, transparent 1%, ${ ({ theme }) => theme.background } 1%) center/20000%;
         box-shadow: 0 0 4px #999;
     }
 
@@ -19,33 +28,17 @@ export const RippleButton = styled.button`
     }
 
     &[disabled] {
-        opacity: 0.3;
         cursor: not-allowed;
+        opacity: 0.3;
     }
-
-    padding: 7px 12px 10px 12px;
-    line-height: 40px;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
-
-    border: 1px solid ${ ({ theme }) => theme.text };
-    border-radius: 4px;
-    background-color: ${ ({ theme }) => theme.background };
-    color: ${ ({ theme }) => theme.text };
 `;
+// Material "ripple" button - https://codepen.io/finnhvman/pen/jLXKJw
 
 export const NormalButton = styled(RippleButton)`
-    line-height: 16px;
     font-size: 16px;
-    padding: 8px 12px;
     font-weight: normal;
-
-    &:hover {
-        background: ${ ({ theme }) => theme.active }
-            radial-gradient(circle, transparent 1%, ${ ({ theme }) => theme.background } 1%) center/15000%;
-    }
+    line-height: 16px;
+    padding: 8px 12px;
 `;
 
 NormalButton.defaultProps = RippleButton.defaultProps = {

@@ -2,14 +2,12 @@ import styled from 'styled-components';
 import { themes } from '../utils';
 
 export const CustomTextInputStyles = styled.div`
-    margin-right: 12px;
     border: 1px solid ${ ({ theme }) => theme.lightBorder };
+    border-radius: 4px;
     display: flex;
+    margin-right: 12px;
+    align-items: center;
     width: 100%;
-
-    .currency-near-input {
-        color: ${ ({ theme }) => theme.lightBorder };
-    }
 
     &.focused {
         border: 1px solid ${ ({ theme }) => theme.text };
@@ -19,15 +17,26 @@ export const CustomTextInputStyles = styled.div`
         }
     }
 
+    .currency-near-input {
+        font-size: 30px;
+        padding: 8px;
+        color: ${ ({ theme }) => theme.lightBorder };
+    }
+
     input {
-        border-radius: 4px;
+        background: none;
+        border-color: transparent;
+        color: ${ ({ theme }) => theme.text };
+        display: block;
+        font-size: 35px;
+        margin: 1px;
         text-align: right;
         width: 100%;
-        display: block;
+        padding: 6px 4px 6px 0;
 
         &:focus {
-            outline: none;
             border-color: transparent;
+            outline: none;
         }
     }
 `;

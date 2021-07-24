@@ -11,8 +11,7 @@ const StyledCenteredSelect = styled.select`
     cursor: pointer;
     display: flex;
     font-weight: bold;
-    font-size: 12px;
-    min-width: 155px;
+    font-size: 16px;
     padding: 8px;
 
     &:focus {
@@ -33,7 +32,7 @@ interface GlobalCurrencyDropdownProps {
 }
 
 export const GlobalCurrencyDropdown = React.memo((props: GlobalCurrencyDropdownProps) => {
-    const { balances, from, to, setToValue, allRates } = props;
+    const { to, from, setToValue, balances, allRates } = props;
     return (
         <StyledCenteredSelect value={ to } onChange={ e => setToValue(e.target.value) }>
             {Object.values(balances)

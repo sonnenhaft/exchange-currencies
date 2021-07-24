@@ -5,6 +5,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: ${ ({ theme }: { theme: Theme }) => theme.active };
   }
+
   select {
     margin: 0;
   }
@@ -15,14 +16,14 @@ GlobalStyle.defaultProps = {
 };
 
 export const AppStyles = styled.div`
-    display: flex;
-    flex-direction: column;
     align-items: center;
     color: ${ ({ theme }) => theme.text };
-    max-width: 600px;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     margin: auto;
+    max-width: 600px;
     padding: 0 8px;
+    position: relative;
 `;
 
 AppStyles.defaultProps = {
@@ -32,8 +33,8 @@ AppStyles.defaultProps = {
 export const AbsoluteRight = styled.div`
     display: flex;
     justify-content: flex-end;
-    padding: 8px;
     margin-top: -2px;
+    padding: 8px;
 
     > button {
         margin-left: 16px;

@@ -19,14 +19,12 @@ export function useHash<T extends string | boolean = string>(hashKey: string, de
     useEffect(() => {
         const setFromHashIfChanged = e => {
             const newHashValue = readHash(e.newURL)[hashKey];
-
             if (newHashValue !== currentValue) {
                 setCurrentValue(newHashValue);
             }
         };
 
         window.addEventListener('hashchange', setFromHashIfChanged, false);
-
         return () => window.removeEventListener('hashchange', setFromHashIfChanged, false);
     }, [currentValue, hashKey]);
 

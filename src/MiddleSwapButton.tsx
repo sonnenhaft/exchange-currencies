@@ -8,13 +8,13 @@ const MiddleSwapButtonStyles = styled.div`
     text-align: center;
 
     & button {
-        z-index: 1;
-        position: absolute;
-        transform: translate(-50%, -50%);
         background: transparent;
         border: none;
         border-radius: 4px;
         padding: 8px 4px 0;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        z-index: 1;
 
         & > svg > path {
             fill: ${ ({ theme }) => theme.text };

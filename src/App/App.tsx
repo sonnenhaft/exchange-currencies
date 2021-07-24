@@ -63,6 +63,7 @@ export const App = () => {
     return (
         <ThemeProvider theme={ theme }>
             <GlobalStyle theme={ theme } />
+
             <AbsoluteRight>
                 {isMocked && <NormalButton onClick={ () => setMocked(false) }>Disable 𓆟</NormalButton>}
 
@@ -81,23 +82,22 @@ export const App = () => {
                                 <NormalButton onClick={ () => setMocked(true) }>Use Mocks 𓆟</NormalButton>
                             </>
                         )}
+
                         {!error && <>Can not load currencies</>}
                     </div>
                 )}
 
                 {!errorOrEmptyData && balances && (
                     <ExchangeWidget
-                        saveBalances={ saveBalances }
                         selectedCurrencies={ { from, to } }
                         onCurrenciesChanged={ onCurrenciesChanged }
                         total={ total }
                         setTotal={ setTotal }
                         balances={ balances }
+                        saveBalances={ saveBalances }
                         allRates={ allRates }
                     />
                 )}
-
-                <br />
             </AppStyles>
         </ThemeProvider>
     );

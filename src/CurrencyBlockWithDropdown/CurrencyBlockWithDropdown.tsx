@@ -9,31 +9,35 @@ import { WrappedWithPrevNextButtons } from './WrappedWithPrevNextButtons';
 
 export interface CurrencyBlockWithDropdownProps {
     value: string;
-    from: string;
+    onChange?: Setter<string>;
     total: number;
-    balances: Record<string, CurrencyWithBalance>;
+    from: string;
     setTotal: Setter<number>;
-    onChange: Setter<string>;
+    balances: Record<string, CurrencyWithBalance>;
     rate?: number | null;
 }
 
 export const CurrencyBlockWithDropdown = (props: CurrencyBlockWithDropdownProps) => {
-    const { value, from, onChange, balances, total, setTotal, rate } = props;
+    const { value, onChange, from, total, setTotal, balances, rate } = props;
     const currencies = Object.values(balances);
     const next = () => {
-        const val = currencies.findIndex(({ name }) => name === value) - 1;
-        onChange(currencies[val < 0 ? currencies.length - 1 : val].name);
+        if (onChange) {
+            const val = currencies.findIndex(({ name }) => name === value) - 1;
+            onChange(currencies[val < 0 ? currencies.length - 1 : val].name);
+        }
     };
     const prev = () => {
-        const val = currencies.findIndex(({ name }) => name === value) + 1;
-        onChange(currencies[val > currencies.length - 1 ? 0 : val].name);
+        if (onChange) {
+            const val = currencies.findIndex(({ name }) => name === value) + 1;
+            onChange(currencies[val > currencies.length - 1 ? 0 : val].name);
+        }
     };
 
     const toSymbol = balances[value].symbol;
     return (
         <CurrencyBlockWithDropdownStyles>
-            <WrappedWithPrevNextButtons next={ next } prev={ prev }>
-                <select value={ value } onChange={ e => onChange(e.target.value) }>
+            <WrappedWithPrevNextButtons next={ next } prev={ prev } visible={ !!onChange }>
+                <select value={ value } onChange={ e => onChange && onChange(e.target.value) }>
                     {currencies.map(({ name }) => (
                         <option value={ name } key={ name }>
                             {name}

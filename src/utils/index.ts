@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 export function roundNumber(num: number): string {
     const twoDigits = Number.parseFloat(num + '').toFixed(4);
-    // to prevent case where EUR0.01=USD 0.01
+    // to prevent case where $0.01 = €0.01
     const flooredValue = twoDigits.substring(0, twoDigits.length - 2);
 
     // max 2 digits after dot, no zeroes in the end

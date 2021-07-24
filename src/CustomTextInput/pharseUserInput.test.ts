@@ -1,7 +1,7 @@
 import { pharseUserInput } from './pharseUserInput';
 import { getUpdatedValue } from './CustomTextInput';
 
-test('getSafeNumber should parse text input properly', () => {
+test('"pharseUserInput" should parse text input properly', () => {
     expect(pharseUserInput('-.1')).toEqual([-0.1, '-0.1']);
     expect(pharseUserInput('-.sdfSD*()[]1')).toEqual([-0.1, '-0.1']);
     expect(pharseUserInput('.1')).toEqual([0.1, '+0.1']);

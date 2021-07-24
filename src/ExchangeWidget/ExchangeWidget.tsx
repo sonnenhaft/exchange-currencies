@@ -16,15 +16,15 @@ interface SelectedCurrencies {
 interface ExchangeWidgetProps {
     selectedCurrencies: SelectedCurrencies;
     onCurrenciesChanged: Setter<Partial<SelectedCurrencies>>;
-    saveBalances: Setter<Record<string, CurrencyWithBalance>>;
     total: number;
     setTotal: Setter<number>;
     balances: Record<string, CurrencyWithBalance>;
+    saveBalances: Setter<Record<string, CurrencyWithBalance>>;
     allRates?: Record<string, number>;
 }
 
 export const ExchangeWidget = (props: ExchangeWidgetProps) => {
-    const { selectedCurrencies, total, onCurrenciesChanged, setTotal, balances, allRates } = props;
+    const { selectedCurrencies, onCurrenciesChanged, total, setTotal, balances, allRates } = props;
     const { from, to } = selectedCurrencies;
     const swapCurrencies = () => onCurrenciesChanged({ to: from, from: to });
     const setToValue = to => (to === from ? swapCurrencies() : onCurrenciesChanged({ to }));
@@ -49,19 +49,19 @@ export const ExchangeWidget = (props: ExchangeWidgetProps) => {
                     to={ to }
                     from={ from }
                     setToValue={ setToValue }
-                    allRates={ allRates }
                     balances={ balances }
+                    allRates={ allRates }
                 />
             </Centered>
 
             <ExchangeWidgetStyles>
                 <CurrencyBlockWithDropdown
                     value={ from }
-                    from={ from }
                     onChange={ setFromValue }
-                    balances={ balances }
+                    from={ from }
                     total={ total }
                     setTotal={ setTotal }
+                    balances={ balances }
                     rate={ -1 }
                 />
 
@@ -69,11 +69,11 @@ export const ExchangeWidget = (props: ExchangeWidgetProps) => {
 
                 <CurrencyBlockWithDropdown
                     value={ to }
-                    from={ from }
                     onChange={ setToValue }
-                    balances={ balances }
+                    from={ from }
                     total={ total }
                     setTotal={ setTotal }
+                    balances={ balances }
                     rate={ allRates && allRates[to] }
                 />
             </ExchangeWidgetStyles>
