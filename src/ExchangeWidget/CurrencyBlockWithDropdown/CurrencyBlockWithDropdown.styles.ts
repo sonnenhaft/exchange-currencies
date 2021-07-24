@@ -6,18 +6,9 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
     height: 150px;
     background: linear-gradient(0deg, rgb(23 88 197) 0%, rgb(62 124 228) 100%);
     position: relative;
+    align-items: center;
 
-    input {
-        text-align: right;
-        width: 100%;
-    }
-
-    select {
-        cursor: pointer;
-        margin: 0 8px !important;
-        width: 150px;
-    }
-
+    .currency-near-input,
     select,
     input {
         border: 1px solid transparent;
@@ -31,6 +22,25 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
         &:focus {
             border-color: white;
         }
+    }
+
+    input {
+        text-align: right;
+        width: 100%;
+    }
+
+    select {
+        cursor: pointer;
+        margin: 0 8px !important;
+    }
+
+    select,
+    .currency-near-input {
+        width: 150px;
+    }
+
+    .currency-near-input {
+        //line-height: 130px;
     }
 `;
 

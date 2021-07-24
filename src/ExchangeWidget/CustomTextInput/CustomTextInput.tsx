@@ -12,7 +12,11 @@ function getSafeNumber(value: string): [number, string] {
     const noSignsStr = value.replace(/[+-]/g, '');
     // replace all dots except last https://stackoverflow.com/questions/9694930/remove-all-occurrences-except-last/28673744
     const singleOrNoDotsStr = noSignsStr.replace(/[.,](?=.*[.,])/g, '').replace(/[,]/g, '.');
-    const withoutLeadingZeros = singleOrNoDotsStr.replace(/^0+/, '');
+    let withoutLeadingZeros = singleOrNoDotsStr.replace(/^0+/, '');
+    if (withoutLeadingZeros.startsWith('.')) {
+        withoutLeadingZeros = `0${ withoutLeadingZeros }`;
+    }
+
     return [
         Number.parseFloat(singleOrNoDotsStr.replace(/ /g, '') || '0') * (isNegative ? -1 : 1),
         `${ singleOrNoDotsStr ? (isNegative ? '-' : '+') : '' }${

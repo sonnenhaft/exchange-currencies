@@ -28,7 +28,7 @@ export const CurrencyBlockWithDropdown = (props: CurrencyBlockWithDropdownProps)
 
     const [toSymbol, fromSymbol] = useMemo(() => {
         const toSymbol = currencies.find(({ id }) => id === value)?.currencySymbol || value;
-        const fromSymbol = currencies.find(({ id }) => id === from)?.currencySymbol || value;
+        const fromSymbol = currencies.find(({ id }) => id === from)?.currencySymbol || from;
         return [toSymbol, fromSymbol];
     }, [currencies, value, from]);
 
@@ -43,18 +43,17 @@ export const CurrencyBlockWithDropdown = (props: CurrencyBlockWithDropdownProps)
                     ))}
                 </select>
 
+                <div className="currency-near-input">{toSymbol}</div>
                 <CustomTextInput rate={ rate } value={ total } setValue={ setTotal } />
 
                 <YourBalanceBlock>
                     <span>
-                        You have {toSymbol}
-                        {balance}
+                        You have&nbsp;&nbsp;{toSymbol} {balance}
                     </span>
 
                     {rate && value !== from && (
                         <span>
-                            {toSymbol}1 = {fromSymbol}
-                            {roundNumber(1 / rate)}
+                            {toSymbol} 1 = {fromSymbol} {roundNumber(1 / rate)}
                         </span>
                     )}
                 </YourBalanceBlock>

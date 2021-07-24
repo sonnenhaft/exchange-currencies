@@ -1,8 +1,11 @@
 import { memo } from 'react';
 
 export function roundNumber(num: number): string {
+    const fixedThreeDigits = Number.parseFloat(num + '').toFixed(3);
+    // to prevent case where EUR0.1=USD 0.1
+    const flooredValue = Math.floor(Number(fixedThreeDigits) * 100) / 100;
     // max 2 digits after dot, no zeroes in the end
-    return Number.parseFloat(Number.parseFloat(num + '').toFixed(2)) + '';
+    return Number.parseFloat(flooredValue.toFixed(2)) + '';
 }
 
 export const areEqual =
