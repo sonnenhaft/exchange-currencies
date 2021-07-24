@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Currency, Setter, areEqual, roundNumber } from 'utils';
+
+import { Currency, Setter, areEqual, roundNumber, themes } from 'utils';
 
 const StyledCenteredSelect = styled.select`
-    background: #0e5dd1;
-    border-color: #1c6ee2;
+    background: ${ ({ theme }) => theme.background };
+    border-color: ${ ({ theme }) => theme.text };
     border-radius: 4px;
-    color: white;
+    color: ${ ({ theme }) => theme.text };
     cursor: pointer;
     display: flex;
     font-weight: bold;
@@ -16,9 +17,13 @@ const StyledCenteredSelect = styled.select`
     padding: 8px;
 
     &:focus {
-        border-color: white;
+        border-color: ${ ({ theme }) => theme.text };
     }
 `;
+
+StyledCenteredSelect.defaultProps = {
+    theme: themes.default
+};
 
 interface GlobalCurrencyDropdownProps {
     to: string;

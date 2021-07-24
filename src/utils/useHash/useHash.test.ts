@@ -1,5 +1,6 @@
-import { renderHook, act } from '@testing-library/react-hooks';
 import { fireEvent } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
+
 import { useNumberHash } from './useHash';
 
 describe('useHash', function () {

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { RippleButton } from 'ExchangeWidget/RippleButton';
 
 export const WrappedWithPrevNextButtons = ({

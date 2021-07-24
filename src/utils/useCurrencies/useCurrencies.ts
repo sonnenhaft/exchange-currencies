@@ -1,5 +1,6 @@
-import { useHash } from 'utils/useHash/useHash';
 import { useCallback } from 'react';
+
+import { useHash } from 'utils/useHash/useHash';
 
 export const useCurrencies = (hashKey: string, from_to_defaultVal: string) => {
     const [currencies, setCurrencies] = useHash(hashKey, from_to_defaultVal);

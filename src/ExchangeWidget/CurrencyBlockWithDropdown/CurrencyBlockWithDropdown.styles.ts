@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { themes } from '../../utils';
 
 export const CurrencyBlockWithDropdownStyles = styled.div`
-    color: white;
     display: flex;
     height: 150px;
-    background: linear-gradient(0deg, rgb(23 88 197) 0%, rgb(62 124 228) 100%);
+    background: linear-gradient(0deg, ${ ({ theme }) => theme.active } 0%, ${ ({ theme }) => theme.background } 100%);
     position: relative;
     align-items: center;
 
@@ -15,7 +15,7 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
         border-radius: 0;
         margin: 1px;
         background: none;
-        color: white;
+        color: ${ ({ theme }) => theme.text };
         font-size: 35px;
         padding: 8px;
 
@@ -38,11 +38,11 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
     .currency-near-input {
         width: 150px;
     }
-
-    .currency-near-input {
-        //line-height: 130px;
-    }
 `;
+
+CurrencyBlockWithDropdownStyles.defaultProps = {
+    theme: themes.default
+};
 
 export const YourBalanceBlock = styled.div`
     font-size: 16px;

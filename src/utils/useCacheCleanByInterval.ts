@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+
 import { freeCurrconvApi } from 'freeCurrconvApi';
 
 export const useCacheCleanByInterval = (fn: () => Promise<any>, deps: any[]) => {

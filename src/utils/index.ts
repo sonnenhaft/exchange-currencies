@@ -23,7 +23,27 @@ export interface Currency {
     currencySymbol?: string; // like '$'
 }
 
+export const themes: Record<
+    string,
+    {
+        background: string;
+        text: string;
+        active: string;
+    }
+> = {
+    default: {
+        background: 'white',
+        active: '#f2f2f2',
+        text: '#494949'
+    },
+    dark: {
+        background: '#2864d0',
+        active: '#11387a',
+        text: 'white'
+    }
+};
+
 export { useCurrencies } from './useCurrencies/useCurrencies';
-export { useHash, useNumberHash, useBoolHash } from './useHash/useHash';
+export { useHash, useNumberHash } from './useHash/useHash';
 export { useCacheCleanByInterval } from './useCacheCleanByInterval';
 export { useAsync } from './useAsync';

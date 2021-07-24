@@ -1,6 +1,7 @@
-import { RippleButton } from './RippleButton';
 import React from 'react';
 import styled from 'styled-components';
+
+import { RippleButton } from './RippleButton';
 
 const ExchangeMiddleButtonStyles = styled.div`
     width: 100%;

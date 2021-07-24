@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { GlobalCurrencyDropdown } from './GlobalCurrencyDropdown';
+import { Currency, Setter } from 'utils';
+
 import { CurrencyBlockWithDropdown } from './CurrencyBlockWithDropdown';
 import { ExchangeMiddleButton } from './ExchangeMiddleButton';
 import { CurrencyBlock } from './ExchangeWidget.styles';
-import { Currency, Setter } from 'utils';
+import { GlobalCurrencyDropdown } from './GlobalCurrencyDropdown';
 
-type SelectedCurrencies = { from: string; to: string };
+interface SelectedCurrencies {
+    from: string;
+    to: string;
+}
 
 interface ExchangeWidgetProps {
     selectedCurrencies: SelectedCurrencies;

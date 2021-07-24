@@ -23,9 +23,7 @@ const getJson = async <T>(url: string): Promise<T> => {
     return memoize(completeUrl, async () => (await fetch(completeUrl)).json());
 };
 
-type Currencies = Record<string, Currency>;
-
-const mockData = {
+const mockData: Record<string, [string, string, Record<string, number>]> = {
     SGD: ['Singapore dollar', '$S', { MYR: 3.11, USD: 0.74 }],
     MYR: ['Malaysian Ringgit', 'RM', { SGD: 1 / 3.11, USD: 0.24 }],
     USD: ['United States Dollar', '$', { MYR: 1 / 0.24, SGD: 1 / 0.74 }]
@@ -39,16 +37,11 @@ const mockedCurrencies: Record<string, number> = Object.fromEntries(
         .flat()
 );
 
-const allCurrencies: Currencies = Object.fromEntries(
-    Object.entries(mockData).map(([id, [currencyName, currencySymbol]]) => [
-        id,
-        {
-            id,
-            currencySymbol,
-            currencyName
-        }
-    ])
-) as Currencies;
+const allCurrencies: Currency[] = Object.entries(mockData).map(([id, [currencyName, currencySymbol]]) => ({
+    id,
+    currencySymbol,
+    currencyName
+}));
 
 const pause = (timeout: number) => new Promise(s => setTimeout(s, timeout));
 
@@ -95,7 +88,7 @@ export const freeCurrconvApi = {
             await pause(300);
             return Object.values(allCurrencies);
         } else {
-            const { results } = await getJson<{ results: Currencies }>(`/api/v7/currencies`);
+            const { results } = await getJson<{ results: Record<string, Currency> }>(`/api/v7/currencies`);
             return Object.values(results);
         }
     }

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+
 import { areEqual, roundNumber, Setter } from 'utils';
 
 interface CustomTextInputProps {
@@ -9,13 +10,17 @@ interface CustomTextInputProps {
 
 function getSafeNumber(value: string): [number, string] {
     const isNegative = value.includes('-') && !value.endsWith('+');
-    const noSignsStr = value.replace(/[+-]/g, '');
+    const digitsAndSpacesAndDotStr = value.replace(/[^0-9,. ]/g, '');
     // replace all dots except last https://stackoverflow.com/questions/9694930/remove-all-occurrences-except-last/28673744
-    const singleOrNoDotsStr = noSignsStr.replace(/[.,](?=.*[.,])/g, '').replace(/[,]/g, '.');
+    const singleOrNoDotsStr = digitsAndSpacesAndDotStr.replace(/[.,](?=.*[.,])/g, '').replace(/[,]/g, '.');
     let withoutLeadingZeros = singleOrNoDotsStr.replace(/^0+/, '');
     if (withoutLeadingZeros.startsWith('.')) {
         withoutLeadingZeros = `0${ withoutLeadingZeros }`;
     }
+    const [real, decimal = ''] = withoutLeadingZeros.split('.');
+    withoutLeadingZeros =
+        Number(real.replace(/ /g, '')).toLocaleString('en-US').replace(/,/g, ' ') +
+        (decimal ? `.${ decimal }` : withoutLeadingZeros.endsWith('.') ? '.' : '');
 
     return [
         Number.parseFloat(singleOrNoDotsStr.replace(/ /g, '') || '0') * (isNegative ? -1 : 1),
@@ -32,8 +37,8 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
     const onChange = useCallback(
         (value: string) => {
             if (rate) {
-                const [safeNumber, safeString] = getSafeNumber(value);
-                setStringValue(safeString);
+                const [safeNumber, formattedString] = getSafeNumber(value);
+                setStringValue(formattedString);
                 const innerNumber = safeNumber * rate;
                 setNumberValue(innerNumber);
                 setValue(innerNumber);
@@ -46,9 +51,9 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
     useEffect(() => {
         if (rate) {
             if (numberValue !== value) {
-                const [num, str] = getSafeNumber(roundNumber(value / rate));
-                setNumberValue(num);
-                setStringValue(str);
+                const [safeNumber, formattedString] = getSafeNumber(roundNumber(value / rate));
+                setNumberValue(safeNumber);
+                setStringValue(formattedString);
             }
         } else {
             setStringValue('Loading...  ');
@@ -66,7 +71,7 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
             onKeyDown={ e => {
                 // preventing non numeric keydown
                 if (!e.shiftKey && !e.ctrlKey && !e.altKey && !e.metaKey) {
-                    if (e.key.length === 1 && !/^[0-9,.+\- ]{1,1}/.test(e.key)) {
+                    if (e.key.length === 1 && !/^[0-9,.+-]{1,1}/.test(e.key)) {
                         e.preventDefault();
                     }
                 }
