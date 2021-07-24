@@ -24,17 +24,19 @@ export const AppStyles = styled.div`
     max-width: 600px;
     padding: 0 8px;
     position: relative;
+    height: 100vh;
 `;
 
 AppStyles.defaultProps = {
     theme: themes.default
 };
 
-export const AbsoluteRight = styled.div`
+export const ThemeSwitchWrapper = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: -2px;
     padding: 8px;
+    margin-bottom: 40px;
 
     > button {
         margin-left: 16px;

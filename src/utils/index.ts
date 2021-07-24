@@ -26,8 +26,10 @@ export interface CurrencyWithBalance {
 
 export interface Theme {
     background: string;
-    text: string;
     active: string;
+    disabled: string;
+    disabledText: string;
+    text: string;
     lightBorder: string;
 }
 
@@ -35,12 +37,16 @@ export const themes: Record<string, Theme> = {
     default: {
         background: 'white',
         active: '#f2f2f2',
+        disabled: '#e4e4e4',
+        disabledText: '#b3b3b3',
         text: '#494949',
         lightBorder: '#cccccc'
     },
     dark: {
         background: '#2864d0',
         active: '#11387a',
+        disabled: '#728499',
+        disabledText: '#abbfd5',
         text: 'white',
         lightBorder: '#c2c2c2'
     }

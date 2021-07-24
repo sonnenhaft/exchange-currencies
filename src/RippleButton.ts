@@ -15,7 +15,7 @@ export const RippleButton = styled.button`
     padding: 7px 12px 10px 12px;
     transition: background 0.8s;
 
-    &:hover {
+    &:hover:not([disabled]) {
         background: ${ ({ theme }) => theme.active }
             radial-gradient(circle, transparent 1%, ${ ({ theme }) => theme.background } 1%) center/20000%;
         box-shadow: 0 0 4px #999;
@@ -29,7 +29,9 @@ export const RippleButton = styled.button`
 
     &[disabled] {
         cursor: not-allowed;
-        opacity: 0.3;
+        background: ${ ({ theme }) => theme.disabled };
+        border-color: ${ ({ theme }) => theme.disabledText };
+        color: ${ ({ theme }) => theme.disabledText };
     }
 `;
 // Material "ripple" button - https://codepen.io/finnhvman/pen/jLXKJw

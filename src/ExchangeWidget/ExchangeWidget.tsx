@@ -25,29 +25,34 @@ interface ExchangeWidgetProps {
 
 export const ExchangeWidget = (props: ExchangeWidgetProps) => {
     const { selectedCurrencies, onCurrenciesChanged, total, setTotal, balances, allRates } = props;
-    const { from, to } = selectedCurrencies;
-    const swapCurrencies = () => onCurrenciesChanged({ to: from, from: to });
-    const setToValue = to => (to === from ? swapCurrencies() : onCurrenciesChanged({ to }));
-    const setFromValue = from => (from === to ? swapCurrencies() : onCurrenciesChanged({ from }));
+    const { from: fromCurrencyName, to: toCurrencyName } = selectedCurrencies;
+    const swapCurrencies = () => onCurrenciesChanged({ to: fromCurrencyName, from: toCurrencyName });
+    const setToValue = toCurrencyName =>
+        toCurrencyName === fromCurrencyName ? swapCurrencies() : onCurrenciesChanged({ to: toCurrencyName });
+    const setFromValue = fromCurrencyName =>
+        toCurrencyName === fromCurrencyName ? swapCurrencies() : onCurrenciesChanged({ from: fromCurrencyName });
 
     const exchangeCurrencies = () => {
         if (!allRates) {
             return;
         }
-        balances[from].balance = balances[from].balance - total;
-        balances[to].balance = balances[to].balance + total * allRates[to];
+        balances[fromCurrencyName].balance = balances[fromCurrencyName].balance - total;
+        balances[toCurrencyName].balance = balances[toCurrencyName].balance + total * allRates[toCurrencyName];
         props.saveBalances({ ...balances });
     };
 
     const exchangeDisabled =
-        !allRates || !total || total > balances[from].balance || total < -balances[to].balance / allRates[to];
+        !allRates ||
+        !total ||
+        total > balances[fromCurrencyName].balance ||
+        total < -balances[toCurrencyName].balance / allRates[toCurrencyName];
 
     return (
         <CurrencyBlock>
             <Centered>
                 <GlobalCurrencyDropdown
-                    to={ to }
-                    from={ from }
+                    toCurrencyName={ toCurrencyName }
+                    fromCurrencyName={ fromCurrencyName }
                     setToValue={ setToValue }
                     balances={ balances }
                     allRates={ allRates }
@@ -56,9 +61,9 @@ export const ExchangeWidget = (props: ExchangeWidgetProps) => {
 
             <ExchangeWidgetStyles>
                 <CurrencyBlockWithDropdown
-                    value={ from }
-                    onChange={ setFromValue }
-                    from={ from }
+                    currencyName={ fromCurrencyName }
+                    setCurrencyName={ setFromValue }
+                    fromCurrencyName={ fromCurrencyName }
                     total={ total }
                     setTotal={ setTotal }
                     balances={ balances }
@@ -68,13 +73,13 @@ export const ExchangeWidget = (props: ExchangeWidgetProps) => {
                 <MiddleSwapButton onClick={ swapCurrencies } />
 
                 <CurrencyBlockWithDropdown
-                    value={ to }
-                    onChange={ setToValue }
-                    from={ from }
+                    currencyName={ toCurrencyName }
+                    setCurrencyName={ setToValue }
+                    fromCurrencyName={ fromCurrencyName }
                     total={ total }
                     setTotal={ setTotal }
                     balances={ balances }
-                    rate={ allRates && allRates[to] }
+                    rate={ allRates && allRates[toCurrencyName] }
                 />
             </ExchangeWidgetStyles>
 

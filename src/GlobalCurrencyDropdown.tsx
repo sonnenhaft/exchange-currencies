@@ -24,29 +24,30 @@ StyledCenteredSelect.defaultProps = {
 };
 
 interface GlobalCurrencyDropdownProps {
-    to: string;
-    from: string;
+    toCurrencyName: string;
+    fromCurrencyName: string;
     setToValue: Setter<string>;
     balances: Record<string, CurrencyWithBalance>;
     allRates?: Record<string, number>;
 }
 
 export const GlobalCurrencyDropdown = React.memo((props: GlobalCurrencyDropdownProps) => {
-    const { to, from, setToValue, balances, allRates } = props;
+    const { toCurrencyName, fromCurrencyName, setToValue, balances, allRates } = props;
+
     return (
-        <StyledCenteredSelect value={ to } onChange={ e => setToValue(e.target.value) }>
+        <StyledCenteredSelect value={ toCurrencyName } onChange={ e => setToValue(e.target.value) }>
             {Object.values(balances)
-                .filter(({ name }) => name !== from)
+                .filter(({ name }) => name !== fromCurrencyName)
                 .map(({ name, symbol }) => {
                     let rate = allRates?.[name];
 
                     return (
                         <option value={ name } key={ name }>
-                            {balances[from].symbol} 1{' = '}
+                            {balances[fromCurrencyName].symbol} 1{' = '}
                             {symbol} {rate ? roundNumber(rate) : 'Loading...'}
                         </option>
                     );
                 })}
         </StyledCenteredSelect>
     );
-}, areEqual(['to', 'from', 'data', 'allRates']));
+}, areEqual(['toCurrencyName', 'fromCurrencyName', 'balances', 'allRates']));

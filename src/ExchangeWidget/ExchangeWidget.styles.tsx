@@ -10,6 +10,7 @@ export const CurrencyBlock = styled.div`
 export const Centered = styled.div`
     display: flex;
     justify-content: center;
+    z-index: 1;
 
     & > button {
         min-width: 50%;
@@ -19,7 +20,7 @@ export const Centered = styled.div`
 export const ExchangeWidgetStyles = styled.div`
     border: 1px solid ${ ({ theme }) => theme.lightBorder };
     border-radius: 4px;
-    margin: 8px 0;
+    margin: -18px 0;
 `;
 
 ExchangeWidgetStyles.defaultProps = {

@@ -6,7 +6,7 @@ import { CurrencyWithBalance, themes, useAsync, useCurrencies, useHash, useNumbe
 import { ExchangeWidget } from 'ExchangeWidget';
 import { NormalButton } from 'RippleButton';
 import { balanceAndRatesApi } from 'balanceAndRatesApi';
-import { AbsoluteRight, AppStyles, GlobalStyle } from './App.styles';
+import { ThemeSwitchWrapper, AppStyles, GlobalStyle } from './App.styles';
 
 export const App = () => {
     const [isMocked, setMocked] = useHash<boolean>('mocked', false);
@@ -57,20 +57,19 @@ export const App = () => {
         }
     }, [usdRates, from]);
     const errorOrEmptyData = !isLoading && (error || !balances);
-
     const theme = isDark ? themes.dark : themes.default;
 
     return (
         <ThemeProvider theme={ theme }>
             <GlobalStyle theme={ theme } />
 
-            <AbsoluteRight>
+            <ThemeSwitchWrapper>
                 {isMocked && <NormalButton onClick={ () => setMocked(false) }>Disable 𓆟</NormalButton>}
 
                 <NormalButton onClick={ () => setDark(!isDark) }>
                     {isDark ? 'To day theme ☼' : 'To night theme ☽'}
                 </NormalButton>
-            </AbsoluteRight>
+            </ThemeSwitchWrapper>
 
             <AppStyles>
                 {isLoading && <div>Loading...</div>}
