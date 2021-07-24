@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../Button';
+import { RippleButton } from 'ExchangeWidget/RippleButton';
 
 export const WrappedWithPrevNextButtons = ({
     prev,
@@ -25,13 +25,13 @@ export const WrappedWithPrevNextButtons = ({
 
     return (
         <>
-            <Button onClick={ next } onKeyDown={ onKeyDown }>
+            <RippleButton onClick={ next } onKeyDown={ onKeyDown }>
                 {'‹'}
-            </Button>
+            </RippleButton>
             {children}
-            <Button onClick={ prev } onKeyDown={ onKeyDown }>
+            <RippleButton onClick={ prev } onKeyDown={ onKeyDown }>
                 {'›'}
-            </Button>
+            </RippleButton>
         </>
     );
 };

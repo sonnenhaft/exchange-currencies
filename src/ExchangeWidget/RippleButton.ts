@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 // Material "ripple" button - https://codepen.io/finnhvman/pen/jLXKJw
-export const Button = styled.button`
+export const RippleButton = styled.button`
     background-position: center;
     transition: background 0.8s;
 
@@ -29,7 +29,7 @@ export const Button = styled.button`
     outline: none;
 `;
 
-export const NormalButton = styled(Button)`
+export const NormalButton = styled(RippleButton)`
     line-height: 16px;
     font-size: 16px;
     padding: 8px 12px;

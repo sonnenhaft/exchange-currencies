@@ -4,7 +4,7 @@ import { GlobalCurrencyDropdown } from './GlobalCurrencyDropdown';
 import { CurrencyBlockWithDropdown } from './CurrencyBlockWithDropdown';
 import { ExchangeMiddleButton } from './ExchangeMiddleButton';
 import { CurrencyBlock } from './ExchangeWidget.styles';
-import { Currency, Setter } from '../utils';
+import { Currency, Setter } from 'utils';
 
 type SelectedCurrencies = { from: string; to: string };
 

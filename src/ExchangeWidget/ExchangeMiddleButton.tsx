@@ -1,4 +1,4 @@
-import { Button } from './Button';
+import { RippleButton } from './RippleButton';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -16,6 +16,6 @@ const ExchangeMiddleButtonStyles = styled.div`
 
 export const ExchangeMiddleButton = ({ onClick }: { onClick: () => void }) => (
     <ExchangeMiddleButtonStyles>
-        <Button onClick={ onClick }>⇵</Button>
+        <RippleButton onClick={ onClick }>⇵</RippleButton>
     </ExchangeMiddleButtonStyles>
 );

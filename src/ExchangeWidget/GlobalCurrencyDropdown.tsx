@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Currency, Setter, areEqual, roundNumber } from '../utils';
+import { Currency, Setter, areEqual, roundNumber } from 'utils';
 
 const StyledCenteredSelect = styled.select`
     background: #0e5dd1;

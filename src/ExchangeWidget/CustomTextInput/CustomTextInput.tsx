@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { areEqual, roundNumber, Setter } from '../../utils';
+import { areEqual, roundNumber, Setter } from 'utils';
 
 interface CustomTextInputProps {
     rate?: number | null;

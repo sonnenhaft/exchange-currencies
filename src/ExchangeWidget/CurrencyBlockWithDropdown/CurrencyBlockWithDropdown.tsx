@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { WrappedWithPrevNextButtons } from './WrappedWithPrevNextButtons';
 import { YourBalanceBlock, CurrencyBlockWithDropdownStyles } from './CurrencyBlockWithDropdown.styles';
-import { Currency, Setter, roundNumber } from '../../utils';
-import { CustomTextInput } from '../CustomTextInput';
+import { Currency, Setter, roundNumber } from 'utils';
+import { CustomTextInput } from 'ExchangeWidget/CustomTextInput';
 
 export interface CurrencyBlockWithDropdownProps {
     value: string;

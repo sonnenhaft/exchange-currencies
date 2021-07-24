@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { useCurrencies, useBoolHash, useNumberHash, useCacheCleanByInterval, useAsync } from '../utils';
-import { freeCurrconvApi } from '../freeCurrconvApi';
+import { useCurrencies, useBoolHash, useNumberHash, useCacheCleanByInterval, useAsync } from 'utils';
+import { freeCurrconvApi } from 'freeCurrconvApi';
 
-import image from './youtube-example.png';
-import { NormalButton } from '../ExchangeWidget/Button';
-import { ExchangeWidget } from '../ExchangeWidget';
+import { NormalButton } from 'ExchangeWidget/RippleButton';
+import { ExchangeWidget } from 'ExchangeWidget';
 
 const AppStyles = styled.div`
     min-height: 100vh;
@@ -100,8 +99,6 @@ export const App = () => {
             )}
 
             <br />
-
-            <img src={ image } width={ 200 } alt="sample from youtube" />
         </AppStyles>
     );
 };
