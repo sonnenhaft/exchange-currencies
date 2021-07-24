@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { RippleButton } from 'ExchangeWidget/RippleButton';
+import { RippleButton } from 'RippleButton';
 
-export const WrappedWithPrevNextButtons = ({
-    prev,
-    next,
-    children
-}: {
+interface WrappedWithPrevNextButtonsProps {
     prev: () => void;
     next: () => void;
     children: React.ReactNode;
-}) => {
+}
+
+export const WrappedWithPrevNextButtons = (props: WrappedWithPrevNextButtonsProps) => {
+    const { prev, next, children } = props;
     const onKeyDown = e => {
         switch (e.code) {
             case 'ArrowRight':

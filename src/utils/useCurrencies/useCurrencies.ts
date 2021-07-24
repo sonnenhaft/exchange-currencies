@@ -13,7 +13,8 @@ export const useCurrencies = (hashKey: string, from_to_defaultVal: string) => {
             (p: { from?: string; to?: string }) => {
                 setCurrencies([p.from || from, p.to || to].join('_'));
             },
-            [from, to, setCurrencies]
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            [from, to]
         )
     };
 };

@@ -16,3 +16,4 @@ npx create-react-app exchange-currencies --template typescript
 -   Added custom formatting and validation checks for currency number input
 -   I wrote tests for several important places, not for all the code. My intent is to show that coverage is just a number. Is often critical to test complex logic, rather than to imitate that everything is fine by covering with statically rendered components
 -   Added simple theeming
+-   I spend much time not to use 3rd party css/react components libs (like material design)

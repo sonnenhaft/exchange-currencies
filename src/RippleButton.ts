@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themes } from '../utils';
+import { themes } from './utils';
 
 // Material "ripple" button - https://codepen.io/finnhvman/pen/jLXKJw
 export const RippleButton = styled.button`
@@ -18,7 +18,11 @@ export const RippleButton = styled.button`
         transition: background 0s;
     }
 
-    border-radius: 2px;
+    &[disabled] {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
     padding: 7px 12px 10px 12px;
     line-height: 40px;
     font-size: 40px;
@@ -27,6 +31,7 @@ export const RippleButton = styled.button`
     outline: none;
 
     border: 1px solid ${ ({ theme }) => theme.text };
+    border-radius: 4px;
     background-color: ${ ({ theme }) => theme.background };
     color: ${ ({ theme }) => theme.text };
 `;

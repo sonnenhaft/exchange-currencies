@@ -1,11 +1,12 @@
 import { memo } from 'react';
 
 export function roundNumber(num: number): string {
-    const fixedThreeDigits = Number.parseFloat(num + '').toFixed(3);
-    // to prevent case where EUR0.1=USD 0.1
-    const flooredValue = Math.floor(Number(fixedThreeDigits) * 100) / 100;
+    const twoDigits = Number.parseFloat(num + '').toFixed(4);
+    // to prevent case where EUR0.01=USD 0.01
+    const flooredValue = twoDigits.substring(0, twoDigits.length - 2);
+
     // max 2 digits after dot, no zeroes in the end
-    return Number.parseFloat(flooredValue.toFixed(2)) + '';
+    return Number.parseFloat(flooredValue) + '';
 }
 
 export const areEqual =
@@ -17,33 +18,34 @@ export interface Setter<T> {
     (newValue: T): void;
 }
 
-export interface Currency {
-    id: string; // like EUR
-    currencyName: string; // like 'Japanese Yen'
-    currencySymbol?: string; // like '$'
+export interface CurrencyWithBalance {
+    name: string;
+    symbol: string;
+    balance: number;
 }
 
-export const themes: Record<
-    string,
-    {
-        background: string;
-        text: string;
-        active: string;
-    }
-> = {
+export interface Theme {
+    background: string;
+    text: string;
+    active: string;
+    lightBorder: string;
+}
+
+export const themes: Record<string, Theme> = {
     default: {
         background: 'white',
         active: '#f2f2f2',
-        text: '#494949'
+        text: '#494949',
+        lightBorder: '#cccccc'
     },
     dark: {
         background: '#2864d0',
         active: '#11387a',
-        text: 'white'
+        text: 'white',
+        lightBorder: '#c2c2c2'
     }
 };
 
-export { useCurrencies } from './useCurrencies/useCurrencies';
-export { useHash, useNumberHash } from './useHash/useHash';
-export { useCacheCleanByInterval } from './useCacheCleanByInterval';
+export { useCurrencies } from './useCurrencies';
+export { useHash, useNumberHash } from './useHash';
 export { useAsync } from './useAsync';

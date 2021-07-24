@@ -8,8 +8,7 @@ const isDebug = false;
 test('renders learn react link', () => {
     const dom = render(<App />);
     if (isDebug) {
-        // @ts-ignore
-        console.log(prettyDOM(dom.container.firstChild));
+        console.log(prettyDOM(dom.container.firstChild as any));
     }
 
     expect(screen.getByText(/loading/i)).toBeInTheDocument();

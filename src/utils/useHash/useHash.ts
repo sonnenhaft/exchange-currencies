@@ -26,6 +26,7 @@ export function useHash<T extends string | boolean = string>(hashKey: string, de
         };
 
         window.addEventListener('hashchange', setFromHashIfChanged, false);
+
         return () => window.removeEventListener('hashchange', setFromHashIfChanged, false);
     }, [currentValue, hashKey]);
 

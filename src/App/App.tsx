@@ -1,97 +1,65 @@
-import React, { useEffect } from 'react';
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import React, { useEffect, useMemo, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 
-import { useCurrencies, useNumberHash, useCacheCleanByInterval, useAsync, useHash, themes } from 'utils';
+import { CurrencyWithBalance, themes, useAsync, useCurrencies, useHash, useNumberHash } from 'utils';
 
 import { ExchangeWidget } from 'ExchangeWidget';
-import { NormalButton, RippleButton } from 'ExchangeWidget/RippleButton';
-import { freeCurrconvApi } from 'freeCurrconvApi';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    background: ${ ({ theme }) => {
-        // @ts-ignore
-        return theme.active;
-    } };
-  }
-`;
-
-GlobalStyle.defaultProps = {
-    theme: themes.default
-};
-
-const AppStyles = styled.div`
-    min-height: 100vh;
-    font-size: calc(10px + 2vmin);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: ${ ({ theme }) => theme.text };
-    max-width: 600px;
-    position: relative;
-    margin: auto;
-    padding: 40px 0;
-`;
-
-AppStyles.defaultProps = {
-    theme: themes.default
-};
-
-const AbsoluteRight = styled.div`
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: -2px;
-
-    > button {
-        margin-left: 16px;
-    }
-`;
+import { NormalButton } from 'RippleButton';
+import { balanceAndRatesApi } from 'balanceAndRatesApi';
+import { AbsoluteRight, AppStyles, GlobalStyle } from './App.styles';
 
 export const App = () => {
     const [isMocked, setMocked] = useHash<boolean>('mocked', false);
     const [isDark, setDark] = useHash<boolean>('dark', false);
 
     const [total, setTotal] = useNumberHash('toConvert', 1);
-    const { from, to, onCurrenciesChanged } = useCurrencies('currencies', 'SGD_MYR');
+    const { from, to, onCurrenciesChanged } = useCurrencies('currencies', 'PLN_EUR');
 
-    const [data, loadCurrencies, isLoading, error] = useAsync(async (useMock = false) =>
-        Promise.all([freeCurrconvApi.getCurrencies(useMock), freeCurrconvApi.getMyBalances(useMock)])
+    const [apiBalances, , isLoading] = useAsync(() => balanceAndRatesApi.fetchMyBalances(), true);
+
+    // here should be "save balance" api instead of mocks
+    const [balances, setBalances] = useState<Record<string, CurrencyWithBalance> | null>(null);
+    const saveBalances = (balances: Record<string, CurrencyWithBalance>) => {
+        localStorage.setItem('myBalances', JSON.stringify(balances));
+        setBalances(balances);
+    };
+
+    useEffect(() => {
+        if (apiBalances) {
+            setBalances(apiBalances);
+        }
+    }, [apiBalances]);
+
+    const [ratesWithExpiration, fetchUSDBaseRates, , error] = useAsync((isMocked: boolean) =>
+        balanceAndRatesApi.fetchUSDBaseRates(isMocked)
     );
-    const [currencies, balances] = data || [];
 
     useEffect(() => {
-        loadCurrencies(isMocked);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMocked]);
-
-    const errorOrEmptyData = (!isLoading && error) || !currencies?.length;
-
-    const [currentRate, getExactChangeRate] = useAsync(freeCurrconvApi.getExactChangeRate);
-    const [allRates, getAllRates] = useAsync(freeCurrconvApi.getAllRates);
+        if (!ratesWithExpiration) {
+            return;
+        }
+        const timeout = setTimeout(() => fetchUSDBaseRates(isMocked), ratesWithExpiration.expiration - Date.now());
+        return () => clearTimeout(timeout);
+    }, [ratesWithExpiration, isMocked, fetchUSDBaseRates]);
 
     useEffect(() => {
-        getAllRates(from, isMocked);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [from, isMocked]);
+        fetchUSDBaseRates(isMocked);
+    }, [isMocked, fetchUSDBaseRates]);
 
-    useCacheCleanByInterval(() => {
-        return Promise.all([getExactChangeRate(from, to, isMocked), getAllRates(from)]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [from, to, isMocked]);
-
-    useEffect(() => {
-        getExactChangeRate(from, to, isMocked);
-
-        const interval = setInterval(async () => {}, freeCurrconvApi.CACHE_EXPIRATION / 2);
-
-        return () => clearInterval(interval);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [from, to, isMocked]);
+    const { rates: usdRates } = ratesWithExpiration || {};
+    const allRates = useMemo(() => {
+        if (!usdRates) {
+            return usdRates;
+        } else {
+            return Object.fromEntries(
+                Object.entries(usdRates).map(([currency, usdRate]) => [currency, usdRate / usdRates[from]])
+            );
+        }
+    }, [usdRates, from]);
+    const errorOrEmptyData = !isLoading && (error || !balances);
 
     const theme = isDark ? themes.dark : themes.default;
+
     return (
         <ThemeProvider theme={ theme }>
             <GlobalStyle theme={ theme } />
@@ -105,7 +73,7 @@ export const App = () => {
 
             <AppStyles>
                 {isLoading && <div>Loading...</div>}
-                {!isLoading && errorOrEmptyData && (
+                {errorOrEmptyData && (
                     <div>
                         {error && (
                             <>
@@ -117,15 +85,14 @@ export const App = () => {
                     </div>
                 )}
 
-                {!isLoading && !errorOrEmptyData && currencies && balances && (
+                {!errorOrEmptyData && balances && (
                     <ExchangeWidget
+                        saveBalances={ saveBalances }
                         selectedCurrencies={ { from, to } }
                         onCurrenciesChanged={ onCurrenciesChanged }
                         total={ total }
                         setTotal={ setTotal }
                         balances={ balances }
-                        currentRate={ currentRate }
-                        currencies={ currencies }
                         allRates={ allRates }
                     />
                 )}

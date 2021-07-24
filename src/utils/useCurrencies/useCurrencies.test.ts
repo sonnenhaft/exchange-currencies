@@ -15,7 +15,7 @@ describe('useCurrencies', function () {
         expect(window.location.hash.endsWith(initValue)).not.toBe(true);
 
         const NEW_FROM = 'USD';
-        const NEW_TO = 'SGD';
+        const NEW_TO = 'PLN';
         act(() => {
             result.current.onCurrenciesChanged({ from: NEW_FROM, to: NEW_TO });
         });

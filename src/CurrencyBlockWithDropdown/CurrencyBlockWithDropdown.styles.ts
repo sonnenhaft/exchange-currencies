@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { themes } from '../../utils';
+import { themes } from '../utils';
 
 export const CurrencyBlockWithDropdownStyles = styled.div`
     display: flex;
@@ -7,6 +7,7 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
     background: linear-gradient(0deg, ${ ({ theme }) => theme.active } 0%, ${ ({ theme }) => theme.background } 100%);
     position: relative;
     align-items: center;
+    padding: 0 8px;
 
     .currency-near-input,
     select,
@@ -24,18 +25,12 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
         }
     }
 
-    input {
-        text-align: right;
-        width: 100%;
-    }
-
     select {
         cursor: pointer;
         margin: 0 8px !important;
     }
 
-    select,
-    .currency-near-input {
+    select {
         width: 150px;
     }
 `;

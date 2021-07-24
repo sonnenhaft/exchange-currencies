@@ -17,8 +17,7 @@ describe('useHash', function () {
     test('Invalid number should degrade to default value', () => {
         const INIT_DEFAULT_VAL = 22;
         const { result: r } = renderHook(() => useNumberHash('test', INIT_DEFAULT_VAL));
-        // @ts-ignore
-        act(() => r.current[1]('abd'));
+        act(() => r.current[1]('abd' as unknown as number)); // for test purposes
         expect(r.current[0]).toBe(INIT_DEFAULT_VAL);
     });
 
