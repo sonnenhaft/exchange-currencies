@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { themes } from '../utils';
 
 export const CurrencyBlockWithDropdownStyles = styled.div`
@@ -10,19 +10,12 @@ export const CurrencyBlockWithDropdownStyles = styled.div`
     background: linear-gradient(0deg, ${ ({ theme }) => theme.active } 0%, ${ ({ theme }) => theme.background } 100%);
 
     select {
-        cursor: pointer;
-        width: 150px;
+        height: 60px;
         background: none;
-        border: 1px solid transparent;
-        border-radius: 0;
-        color: ${ ({ theme }) => theme.text };
+        width: 150px;
         font-size: 35px;
-        margin-left: 8px;
+        margin: 0 8px;
         padding: 8px 0;
-
-        &:focus {
-            border-color: white;
-        }
     }
 `;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 import { RippleButton } from './RippleButton';
 import { themes } from './utils';

@@ -1,13 +1,38 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components/macro';
 import { Theme, themes } from 'utils';
 
 export const GlobalStyle = createGlobalStyle`
   body {
     background: ${ ({ theme }: { theme: Theme }) => theme.active };
+    color: ${ ({ theme }) => theme.text };
   }
 
   select {
     margin: 0;
+  }
+
+  .pseudo-input,
+  select,
+  button {
+    border-radius: 4px;
+    border: 1px solid ${ ({ theme }) => theme.lightBorder };
+    color: ${ ({ theme }) => theme.text };
+    cursor: pointer;
+
+    &:hover, &:focus, &.focused {
+      &:not([disabled]) {
+        box-shadow: 0 0 4px #999;
+        border-color: ${ ({ theme }) => theme.text };
+        outline: none;  
+      }
+    }
+
+    &[disabled] {
+      cursor: not-allowed;
+      background: ${ ({ theme }) => theme.disabled };
+      border-color: ${ ({ theme }) => theme.disabledText };
+      color: ${ ({ theme }) => theme.disabledText };
+    }
   }
 `;
 
@@ -17,7 +42,6 @@ GlobalStyle.defaultProps = {
 
 export const AppStyles = styled.div`
     align-items: center;
-    color: ${ ({ theme }) => theme.text };
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -26,10 +50,6 @@ export const AppStyles = styled.div`
     position: relative;
     height: 100vh;
 `;
-
-AppStyles.defaultProps = {
-    theme: themes.default
-};
 
 export const ThemeSwitchWrapper = styled.div`
     display: flex;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { themes } from '../utils';
 
 export const CurrencyBlock = styled.div`

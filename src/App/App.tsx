@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components/macro';
 
 import { CurrencyWithBalance, themes, useAsync, useCurrencies, useHash, useNumberHash } from 'utils';
 
@@ -12,7 +12,7 @@ export const App = () => {
     const [isMocked, setMocked] = useHash<boolean>('mocked', false);
     const [isDark, setDark] = useHash<boolean>('dark', false);
 
-    const [total, setTotal] = useNumberHash('toConvert', 1);
+    const [total, setTotal] = useNumberHash('toConvert', 10);
     const { from, to, onCurrenciesChanged } = useCurrencies('currencies', 'PLN_EUR');
 
     const [apiBalances, , isLoading] = useAsync(() => balanceAndRatesApi.fetchMyBalances(), true);
@@ -35,7 +35,7 @@ export const App = () => {
     );
 
     useEffect(() => {
-        if (!ratesWithExpiration) {
+        if (!ratesWithExpiration || !ratesWithExpiration.expiration) {
             return;
         }
         const timeout = setTimeout(() => fetchUSDBaseRates(isMocked), ratesWithExpiration.expiration - Date.now());

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 
 import { areEqual, roundNumber, Setter } from 'utils';
 import { pharseUserInput } from './pharseUserInput';
@@ -47,11 +48,13 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
         // of course ideally on mobile here to have 'number' so proper keyboard selected
         // but to add "plus" in front, in browser, without playing with content editable
         // I chosen text input with custom validations
-        <CustomTextInputStyles className={ focused ? 'focused' : '' }>
+        <CustomTextInputStyles className={ cn('pseudo-input', { focused }) }>
             <div className="currency-near-input">{symbol}</div>
 
             <input
                 type="text"
+                inputMode="numeric"
+                formNoValidate
                 disabled={ !rate }
                 onFocus={ () => setFocused(true) }
                 onBlur={ () => setFocused(false) }
@@ -68,4 +71,4 @@ export const CustomTextInput = React.memo((props: CustomTextInputProps) => {
             />
         </CustomTextInputStyles>
     );
-}, areEqual(['value', 'rate', 'symbol']));
+}, areEqual<CustomTextInputProps>(['value', 'rate', 'symbol']));

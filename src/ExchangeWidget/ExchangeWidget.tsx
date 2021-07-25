@@ -45,7 +45,9 @@ export const ExchangeWidget = (props: ExchangeWidgetProps) => {
         !allRates ||
         !total ||
         total > balances[fromCurrencyName].balance ||
-        total < -balances[toCurrencyName].balance / allRates[toCurrencyName];
+        total < -balances[toCurrencyName].balance / allRates[toCurrencyName] ||
+        Math.abs(total * allRates[toCurrencyName]) < 0.01 ||
+        Math.abs(total) < 0.01;
 
     return (
         <CurrencyBlock>

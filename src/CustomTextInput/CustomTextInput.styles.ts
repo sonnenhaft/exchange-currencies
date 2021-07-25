@@ -1,11 +1,11 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { themes } from '../utils';
 
 export const CustomTextInputStyles = styled.div`
     border: 1px solid ${ ({ theme }) => theme.lightBorder };
     border-radius: 4px;
     display: flex;
-    margin-right: 12px;
+    margin-right: 8px;
     align-items: center;
     width: 100%;
 
@@ -29,7 +29,6 @@ export const CustomTextInputStyles = styled.div`
         color: ${ ({ theme }) => theme.text };
         display: block;
         font-size: 35px;
-        margin: 1px;
         text-align: right;
         width: 100%;
         padding: 6px 4px 6px 0;

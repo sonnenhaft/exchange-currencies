@@ -10,7 +10,7 @@ export function roundNumber(num: number): string {
 }
 
 export const areEqual =
-    (keys: string[]): Parameters<typeof memo>[1] =>
+    <Props>(keys: (keyof Props)[]): Parameters<typeof memo>[1] =>
     (from, to) =>
         keys.every(key => from[key] === to[key]);
 

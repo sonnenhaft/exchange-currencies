@@ -4,23 +4,19 @@ export const balanceAndRatesApi = {
     async fetchMyBalances(): Promise<Record<string, CurrencyWithBalance>> {
         await new Promise(s => setTimeout(s, 300)); // simulating delay
 
-        const storedValue = localStorage.getItem('myBalances');
-        if (storedValue) {
-            return JSON.parse(localStorage.getItem('myBalances') as string);
-        }
-
-        const createBalance = () => Math.round(Math.random() * 100);
+        // const createBalance = () => Math.round(Math.random() * 100);
+        const createBalance = () => 100;
         return {
             PLN: { name: 'PLN', symbol: 'zł', balance: createBalance() },
             EUR: { name: 'EUR', symbol: '€', balance: createBalance() },
-            USD: { name: 'USD', symbol: '$', balance: createBalance() }
+            USD: { name: 'USD', symbol: '$', balance: createBalance() },
+            CHF: { name: 'CHF', symbol: '₣', balance: createBalance() }
         };
     },
 
-    async fetchUSDBaseRates(useMock = false): Promise<{ rates: Record<string, number>; expiration: number }> {
-        const TEN_MINUTES = 10 * 60 * 1000;
+    async fetchUSDBaseRates(useMock = false): Promise<{ rates: Record<string, number>; expiration?: number }> {
         if (useMock) {
-            return { rates: { EUR: 0.85, PLN: 1 / 0.26, USD: 1 }, expiration: Date.now() + TEN_MINUTES };
+            return { rates: { EUR: 0.85, PLN: 3.89, USD: 1, CHF: 0.92 } };
         }
         // I know that it wont work in safari by default because of security policies
         const cacheValue = localStorage.getItem('fetchUSDBaseRates');
@@ -45,7 +41,7 @@ export const balanceAndRatesApi = {
             rates: Record<string, number>;
         } = await (await fetch(completeUrl)).json();
 
-        const fullResult = { rates, expiration: Date.now() + TEN_MINUTES };
+        const fullResult = { rates, expiration: Date.now() + 10 * 60 * 1000 };
         localStorage.setItem('fetchUSDBaseRates', JSON.stringify(fullResult));
         return fullResult;
     }
