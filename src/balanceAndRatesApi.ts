@@ -21,8 +21,11 @@ export const balanceAndRatesApi = {
     },
 
     async fetchUSDBaseRates(useMock = false): Promise<{ rates: Record<string, number>; expiration?: number }> {
+        const TEN_SECONDS = 10 * 1000;
         if (useMock) {
-            return { rates: MOCKED_RATES };
+            await new Promise(s => setTimeout(s, 300)); // simulating delay
+            console.warn('fetchUSDBaseRates is mocked');
+            return { rates: MOCKED_RATES, expiration: Date.now() + TEN_SECONDS };
         }
         // I know that it wont work in safari by default because of security policies
         const cacheValue = localStorage.getItem('fetchUSDBaseRates');
@@ -36,7 +39,7 @@ export const balanceAndRatesApi = {
         }
 
         const app_id = process.env.REACT_APP_OPENEXCHANGERATES_APP_ID;
-        const completeUrl = `https://openexchangerates.org/api/latest.json?app_id=${ app_id }`;
+        const completeUrl = `https://openexchangerates.org/api/latest.json?app_id=${app_id}`;
         const {
             rates
         }: {
@@ -47,7 +50,7 @@ export const balanceAndRatesApi = {
             rates: Record<string, number>;
         } = await (await fetch(completeUrl)).json();
 
-        const fullResult = { rates, expiration: Date.now() + 10 * 60 * 1000 };
+        const fullResult = { rates, expiration: Date.now() + TEN_SECONDS };
         localStorage.setItem('fetchUSDBaseRates', JSON.stringify(fullResult));
         return fullResult;
     }

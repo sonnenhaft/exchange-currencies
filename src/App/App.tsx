@@ -41,7 +41,15 @@ export const App = () => {
         fetchUSDBaseRates(isMocked);
     }, [isMocked, fetchUSDBaseRates]);
 
-    const { rates: usdRates } = ratesWithExpiration || {};
+    const { rates } = ratesWithExpiration || {};
+    const [usdRates, setUsdRates] = useState<Record<string, number>>();
+    useEffect(() => {
+        if (rates) {
+            // preventing "loading" case
+            setUsdRates(rates);
+        }
+    }, [rates]);
+
     const allRates = useMemo(() => {
         if (!usdRates) {
             return usdRates;
@@ -51,17 +59,18 @@ export const App = () => {
             );
         }
     }, [usdRates, from]);
+
     const errorOrEmptyData = !isLoading && (error || !balances);
     const theme = isDark ? themes.dark : themes.default;
 
     return (
-        <ThemeProvider theme={ theme }>
-            <GlobalStyle theme={ theme } />
+        <ThemeProvider theme={theme}>
+            <GlobalStyle theme={theme} />
 
             <ThemeSwitchWrapper>
-                {isMocked && <NormalButton onClick={ () => setMocked(false) }>Disable 𓆟</NormalButton>}
+                {isMocked && <NormalButton onClick={() => setMocked(false)}>Disable 𓆟</NormalButton>}
 
-                <NormalButton onClick={ () => setDark(!isDark) }>
+                <NormalButton onClick={() => setDark(!isDark)}>
                     {isDark ? 'To day theme ☼' : 'To night theme ☽'}
                 </NormalButton>
             </ThemeSwitchWrapper>
@@ -73,7 +82,7 @@ export const App = () => {
                         {error && (
                             <>
                                 API error happened, try to{' '}
-                                <NormalButton onClick={ () => setMocked(true) }>Use Mocks 𓆟</NormalButton>
+                                <NormalButton onClick={() => setMocked(true)}>Use Mocks 𓆟</NormalButton>
                             </>
                         )}
 
@@ -83,13 +92,13 @@ export const App = () => {
 
                 {!errorOrEmptyData && balances && (
                     <ExchangeWidget
-                        selectedCurrencies={ { from, to } }
-                        onCurrenciesChanged={ onCurrenciesChanged }
-                        total={ total }
-                        setTotal={ setTotal }
-                        balances={ balances }
-                        saveBalances={ saveBalances }
-                        allRates={ allRates }
+                        selectedCurrencies={{ from, to }}
+                        onCurrenciesChanged={onCurrenciesChanged}
+                        total={total}
+                        setTotal={setTotal}
+                        balances={balances}
+                        saveBalances={saveBalances}
+                        allRates={allRates}
                     />
                 )}
             </AppStyles>
