@@ -39,7 +39,7 @@ export const balanceAndRatesApi = {
         }
 
         const app_id = process.env.REACT_APP_OPENEXCHANGERATES_APP_ID;
-        const completeUrl = `https://openexchangerates.org/api/latest.json?app_id=${app_id}`;
+        const completeUrl = `https://openexchangerates.org/api/latest.json?app_id=${ app_id }`;
         const {
             rates
         }: {
