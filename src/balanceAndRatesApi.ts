@@ -1,22 +1,28 @@
 import { CurrencyWithBalance } from './utils';
 
+export function getMockedBalances() {
+    // const createBalance = () => Math.round(Math.random() * 100);
+    const createBalance = () => 100;
+
+    return {
+        PLN: { name: 'PLN', symbol: 'zł', balance: createBalance() },
+        EUR: { name: 'EUR', symbol: '€', balance: createBalance() },
+        USD: { name: 'USD', symbol: '$', balance: createBalance() },
+        CHF: { name: 'CHF', symbol: '₣', balance: createBalance() }
+    };
+}
+
+export const MOCKED_RATES = { EUR: 0.85, PLN: 3.89, USD: 1, CHF: 0.92 };
 export const balanceAndRatesApi = {
     async fetchMyBalances(): Promise<Record<string, CurrencyWithBalance>> {
         await new Promise(s => setTimeout(s, 300)); // simulating delay
 
-        // const createBalance = () => Math.round(Math.random() * 100);
-        const createBalance = () => 100;
-        return {
-            PLN: { name: 'PLN', symbol: 'zł', balance: createBalance() },
-            EUR: { name: 'EUR', symbol: '€', balance: createBalance() },
-            USD: { name: 'USD', symbol: '$', balance: createBalance() },
-            CHF: { name: 'CHF', symbol: '₣', balance: createBalance() }
-        };
+        return getMockedBalances();
     },
 
     async fetchUSDBaseRates(useMock = false): Promise<{ rates: Record<string, number>; expiration?: number }> {
         if (useMock) {
-            return { rates: { EUR: 0.85, PLN: 3.89, USD: 1, CHF: 0.92 } };
+            return { rates: MOCKED_RATES };
         }
         // I know that it wont work in safari by default because of security policies
         const cacheValue = localStorage.getItem('fetchUSDBaseRates');

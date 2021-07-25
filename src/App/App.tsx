@@ -18,15 +18,10 @@ export const App = () => {
     const [apiBalances, , isLoading] = useAsync(() => balanceAndRatesApi.fetchMyBalances(), true);
 
     // here should be "save balance" api instead of mocks
-    const [balances, setBalances] = useState<Record<string, CurrencyWithBalance> | null>(null);
-    const saveBalances = (balances: Record<string, CurrencyWithBalance>) => {
-        localStorage.setItem('myBalances', JSON.stringify(balances));
-        setBalances(balances);
-    };
-
+    const [balances, saveBalances] = useState<Record<string, CurrencyWithBalance> | null>(null);
     useEffect(() => {
         if (apiBalances) {
-            setBalances(apiBalances);
+            saveBalances(apiBalances);
         }
     }, [apiBalances]);
 
